@@ -18,6 +18,18 @@ const app = express();
 app.use(express.json());
 app.use('/api', router);
 
+// app.useGlobalPipes(
+// 	new ValidationPipe({
+// 		whitelist: true,
+// 		transform: true,
+// 		forbidUnknownValues: false,
+// 		forbidNonWhitelisted: true,
+// 		transformOptions: {
+// 			enableImplicitConversion: true,
+// 		},
+// 	}),
+// );
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server start on ${PORT} port`));
