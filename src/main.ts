@@ -1,7 +1,8 @@
 import express from 'express';
 import { dotenvConfig } from './config/dotenv.config.js';
-import router from './modules/users/api/users.router.js';
 import { config } from './config/typeorm.config.js';
+import userRouter from './modules/users/api/users.router.js';
+import AuthRouter from './modules/auth/api/auth.router.js';
 
 dotenvConfig();
 
@@ -16,7 +17,8 @@ config
 
 const app = express();
 app.use(express.json());
-app.use('/api', router);
+app.use('/api', userRouter);
+app.use('/api', AuthRouter);
 
 // app.useGlobalPipes(
 // 	new ValidationPipe({

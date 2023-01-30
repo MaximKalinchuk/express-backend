@@ -3,11 +3,11 @@ import { body } from 'express-validator';
 import { validationMiddleware } from '../../../common/middlewares/validation-middleware.js';
 import UsersController from './users.controller.js';
 
-const router = Router();
+const userRouter = Router();
 
-router.get('/users', UsersController.getAllUsers);
-router.get('/users/:username', UsersController.getUserByUsername);
-router.post(
+userRouter.get('/users', UsersController.getAllUsers);
+userRouter.get('/users/:username', UsersController.getUserByUsername);
+userRouter.post(
 	'/users',
 	body('username').isString().withMessage('Is not a string.'),
 	body('username').isLength({ min: 2, max: 30 }).withMessage('Username lingth should be from 2 to 30 symbols.'),
@@ -19,4 +19,4 @@ router.post(
 	UsersController.createUser,
 );
 
-export default router;
+export default userRouter;
