@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import RegistrationUseCase from '../application/useCases/registration.use-case.js';
-// import LoginUseCase from '../application/useCases/login.use-case.js';
+import LoginUseCase from '../application/useCases/login.use-case.js';
 
 class AuthController {
 	async registration(req: Request, res: Response): Promise<void> {
@@ -18,8 +18,8 @@ class AuthController {
 	async login(req: Request, res: Response): Promise<void> {
 		try {
 			const userData = req.body;
-			// const user = await LoginUseCase.execute(userData);
-			// res.status(200).json(user);
+			const tokens = await LoginUseCase.execute(userData);
+			res.status(200).json({ access_token: tokens.access_token });
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(500).json({ message: err.message });
