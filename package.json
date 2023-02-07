@@ -10,7 +10,14 @@
 		"dev": "cross-env NODE_ENV=development && yarn nodemon",
 		"lint": "npx eslint ./src",
 		"format": "npx eslint ./src --fix",
-		"prettier": "prettier ./src --write"
+		"prettier": "prettier ./src --write",
+		"typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/database/config/data-source-migrations.ts",
+		"db:start": "yarn db:drop && yarn db:migrate && yarn db:seeds",
+		"db:create": "yarn db:drop && cross-env NODE_ENV=development yarn typeorm migration:generate ./src/database/migrations/createDataBase",
+		"db:migrate": "cross-env NODE_ENV=development yarn typeorm migration:run",
+		"db:drop": "cross-env NODE_ENV=development yarn typeorm schema:drop",
+		"db:seeds": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/database/config/data-source-seeds.ts migration:run",
+		"db:seeds-db": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./src/database/config/data-source-seeds-db.ts migration:run"
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
@@ -34,7 +41,9 @@
 		"nodemon": "^2.0.20",
 		"prettier": "^2.8.3",
 		"rimraf": "^4.1.1",
+		"ts-loader": "^9.4.2",
 		"ts-node": "^10.9.1",
+		"tsconfig-paths": "^4.1.2",
 		"typescript": "^4.9.4"
 	}
 }

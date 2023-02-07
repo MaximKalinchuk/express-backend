@@ -5,7 +5,7 @@ import pkg from 'bcryptjs';
 const { hash } = pkg;
 
 class UsersService {
-	async createUser(userData: CreateUserInputModel): Promise<UsersEntity | unknown> {
+	async createUser(userData: CreateUserInputModel): Promise<UsersEntity> {
 		const userByEmail = await UsersRepository.getUserByEmail(userData.email);
 		if (userByEmail) {
 			throw new Error('This email is already registered.');
@@ -26,7 +26,6 @@ class UsersService {
 	}
 
 	async getUserByUsername(username: string): Promise<UsersEntity | null> {
-		console.log(username);
 		return await UsersRepository.getUserByUsername(username);
 	}
 }

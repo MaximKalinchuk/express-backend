@@ -3,10 +3,11 @@ import { dotenvConfig } from './config/dotenv.config.js';
 import { config } from './config/typeorm.config.js';
 import userRouter from './modules/users/api/users.router.js';
 import AuthRouter from './modules/auth/api/auth.router.js';
+import { AppDataSource } from './database/config/data-source-migrations.js';
 
 dotenvConfig();
 
-config
+await config
 	.initialize()
 	.then(() => {
 		console.log('Data Source has been initialized!');
@@ -14,6 +15,7 @@ config
 	.catch((err) => {
 		console.error('Error during Data Source initialization:', err);
 	});
+await AppDataSource.initialize();
 
 const app = express();
 app.use(express.json());

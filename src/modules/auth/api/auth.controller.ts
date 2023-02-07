@@ -6,8 +6,8 @@ class AuthController {
 	async registration(req: Request, res: Response): Promise<void> {
 		try {
 			const userData = req.body;
-			const user = await RegistrationUseCase.execute(userData);
-			res.status(201).json(user);
+			const tokens = await RegistrationUseCase.execute(userData);
+			res.status(201).json({ access_token: tokens.access_token });
 		} catch (err) {
 			if (err instanceof Error) {
 				res.status(500).json({ message: err.message });
