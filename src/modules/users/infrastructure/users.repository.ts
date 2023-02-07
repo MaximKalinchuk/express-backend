@@ -11,7 +11,7 @@ export class UsersRepository {
 	}
 
 	async getUserByEmail(email: string): Promise<UsersEntity | null> {
-		return await config.getRepository(UsersEntity).findOne({ where: { email } });
+		return await config.getRepository(UsersEntity).findOneBy({ email });
 	}
 
 	async getUserByUsername(username: string): Promise<UsersEntity | null> {
