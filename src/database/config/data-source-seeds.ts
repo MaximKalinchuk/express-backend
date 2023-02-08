@@ -1,6 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { UsersEntity } from '../../modules/users/domain/users.entity.js';
+// import { UsersEntity } from '../../modules/users/domain/users.entity.js';
 dotenv.config({
 	path: `.${process.env.NODE_ENV}.env`,
 });
@@ -12,7 +12,7 @@ const config: DataSourceOptions = {
 	username: process.env.PG_USERNAME,
 	password: process.env.PG_PASSWORD,
 	database: process.env.PG_DATABASE,
-	entities: [UsersEntity],
+	entities: ['src/**/*.entity{.ts,.js}'],
 	migrations: ['src/database/seeds/*{.ts,.js}'],
 	synchronize: false,
 };

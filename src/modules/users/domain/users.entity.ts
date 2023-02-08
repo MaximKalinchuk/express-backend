@@ -24,8 +24,8 @@ export class UsersEntity {
 	@Column()
 	role: UserRoles;
 
-	@Column({ default: null, nullable: true })
-	refresh_token: string;
+	@Column({ default: null, nullable: true, type: 'varchar' })
+	refresh_token: string | null;
 
 	@Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', nullable: true })
 	createdAt: Date;

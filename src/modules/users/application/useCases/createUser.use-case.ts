@@ -10,15 +10,16 @@ class CreateUserUseCase {
 		if (userByEmail) {
 			throw new Error('This email is already registered.');
 		}
+		const passwordHash = await hash(userData.password, 10);
 
 		const newUser = new UsersEntity();
-		Object.assign(newUser, userData);
 
-		const passwordHash = await hash(userData.password, 10);
+		newUser.username = userData.username;
+		newUser.email = userData.email;
 		newUser.passwordHash = passwordHash;
 		newUser.role = UserRoles.USER;
 
-		return await UsersRepository.createUser(newUser);
+		return await UsersRepository.saveUser(newUser);
 	}
 }
 

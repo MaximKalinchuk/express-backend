@@ -3,6 +3,7 @@ import CreateUserUseCase from '../../../users/application/useCases/createUser.us
 import UsersRepository from '../../../users/infrastructure/users.repository.js';
 import AuthService from '../auth.service.js';
 import { TokensViewModel } from '../dto/tokens.view-model.js';
+import UsersService from '../../../users/application/users.service.js';
 
 class RegistrationUseCase {
 	async execute(userData: CreateUserInputModel): Promise<TokensViewModel> {
@@ -18,7 +19,11 @@ class RegistrationUseCase {
 			throw new Error('This username is already registered.');
 		}
 		const newUser = await CreateUserUseCase.execute(userData);
-		return await AuthService.generateTokens(newUser);
+		const tokens = await AuthService.generateTokens(newUser);
+
+		await UsersService.updateRefreshToken(newUser, tokens.refresh_token);
+
+		return tokens;
 	}
 }
 

@@ -1,9 +1,11 @@
 import { LoginInputModel } from '../../api/models/login.input-model.js';
 import UsersRepository from '../../../users/infrastructure/users.repository.js';
-import pkg from 'bcryptjs';
+
 import AuthService from '../auth.service.js';
 import { TokensViewModel } from '../dto/tokens.view-model.js';
+import pkg from 'bcryptjs';
 const { compare } = pkg;
+import UsersService from '../../../users/application/users.service.js';
 
 class LoginUseCase {
 	async execute(userData: LoginInputModel): Promise<TokensViewModel> {
@@ -19,7 +21,9 @@ class LoginUseCase {
 			throw new Error('Wrong password.');
 		}
 
-		return await AuthService.generateTokens(userByEmail);
+		const tokens = await AuthService.generateTokens(userByEmail);
+		await UsersService.updateRefreshToken(userByEmail, tokens.refresh_token);
+		return tokens;
 	}
 }
 
