@@ -1,4 +1,5 @@
 import { Response, Request } from 'express';
+import createUserUseCase from '../application/useCases/createUser.use-case.js';
 import UsersService from '../application/users.service.js';
 
 class UsersController {
@@ -23,7 +24,7 @@ class UsersController {
 	async createUser(req: Request, res: Response): Promise<void> {
 		try {
 			const userData = req.body;
-			const user = await UsersService.createUser(userData);
+			const user = await createUserUseCase.execute(userData);
 			res.status(201).json(user);
 		} catch (err) {
 			if (err instanceof Error) {
